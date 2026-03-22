@@ -2,9 +2,8 @@ data/
 outputs/
 wrapper/
 
-prompts/financial_analysis_prompts.txt
-
 templates/
 
 requirements.txt
 
+redundant/

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Bank Statement Analysis</title>
+
+<style>
+body {
+  font-family: Arial;
+  margin: 40px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+th {
+  background-color: #2f8fa3;
+  color: white;
+}
+
+.page-break {
+  page-break-before: always;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===================== -->
+<!-- PIVOT TABLE SECTION -->
+<!-- ===================== -->
+<h3>Banking Information</h3>
+<table>
+<tr><th>Metric</th><th>Value</th></tr>
+<tr><td>account_holder_name</td><td>Srijayalakshmidiamon</td></tr>
+<tr><td>customer_id</td><td>261566666</td></tr>
+<tr><td>ifsc_code</td><td>CNRB0001223</td></tr>
+<tr><td>bank_name</td><td>Canara Bank</td></tr>
+<tr><td>branch_name</td><td>Trichy Cantonment</td></tr>
+</table>
+<h3>Summary Analysis</h3>
+<table>
+<tr><th>Metric</th><th>Value</th></tr>
+<tr><td>Loan Repayment to Annual Income (%)</td><td>Not mentioned</td></tr>
+<tr><td>EMI to Monthly Income (%)</td><td>Not mentioned</td></tr>
+<tr><td>Net Cashflow (Monthly Average)</td><td>-16671.77</td></tr>
+<tr><td>Expense to Income (%)</td><td>Not mentioned</td></tr>
+<tr><td>Average Balance</td><td>188020.27</td></tr>
+<tr><td>Minimum Balance</td><td>119405.13</td></tr>
+<tr><td>Maximum Balance</td><td>10213910.78</td></tr>
+<tr><td>Monthly Balance Volatility (%)</td><td>512.61</td></tr>
+<tr><td>Statement Period (Months)</td><td>8</td></tr>
+<tr><td>% Months with Negative Closing Balance</td><td>0.0</td></tr>
+<tr><td>% Months with Low Closing Balance</td><td>0.0</td></tr>
+<tr><td>Penalty Occurrence (Months) and Total Amount</td><td>0 months, ₹0.0</td></tr>
+</table>
+<h3>EMI Analysis</h3>
+<table>
+<tr><th>Metric</th><th>Value</th></tr>
+<tr><td>Total EMI Transactions</td><td>46.0</td></tr>
+<tr><td>Total EMI Amount</td><td>1770912.0</td></tr>
+<tr><td>Distinct EMI Months Paid</td><td>7</td></tr>
+<tr><td>Missed EMI Months</td><td>Not mentioned</td></tr>
+<tr><td>EMI Payment Period</td><td>2025-03 to 2025-09</td></tr>
+</table>
+
+<div class="page-break"></div>
+
+<!-- ===================== -->
+<!-- LLM ANALYSIS SECTION -->
+<!-- ===================== -->
+Here is the deterministic HTML:
+
+```html
+<h2>1. Executive Summary</h2>
+<p>The account holder's financial situation is being evaluated to determine the risk associated with lending to them. The analysis will cover their financial health, EMI behavior, and repayment capacity.</p>
+<p>Final Risk Tag: <strong>Low Risk</strong> | <strong>Medium Risk</strong> | <strong>High Risk</strong></p>
+
+<h2>2. Applicant Financial Health</h2>
+<h3>Numeric Overview</h3>
+<p>The account holder's account balance has shown a significant increase from ₹113977.37 to ₹1740556.78 over the period of 2025-02 to 2025-09.</p>
+<h3>Key Findings</h3>
+<ul>
+  <li>The account holder has made a total of 772 debit transactions and 187 credit transactions during the period.</li>
+  <li>The total cash withdrawals have exceeded the total cash deposits, resulting in a net outflow of ₹133374.16.</li>
+  <li>The account holder has made a total of 46 EMI/loan payments, with the highest payment being ₹1770912.</li>
+  <li>The account holder has a total of 3 penalty charges and 3 bank charges during the period.</li>
+  <li>The account holder has a total of 958 cheque transactions, with 772 cheque issuances and 185 cheque receptions.</li>
+  <li>The account holder has made a total of 47 ECS/NACH transactions, with the highest transaction being ₹1791529.</li>
+</ul>
+
+<h2>3. EMI Behaviour & Repayment Capacity</h2>
+<h3>Numeric Overview</h3>
+<p>There are 17 loan providers with a total of 6 months of EMI payments.</p>
+<h3>Key Insights</h3>
+<ul>
+  <li>CLIXCAPITALSERVICE has the highest total EMI paid with a significant amount.</li>
+  <li>VASTUHOUSINGFINANC has the highest total EMI amount with a substantial amount.</li>
+  <li>CHOLAMANDALAMINVEST has the highest total EMI paid in the month of September with a notable amount.</li>
+</ul>
+
+<h2>4. Key Red Flags</h2>
+<ul>
+  <li>Excessive cash withdrawals exceeding cash deposits.</li>
+  <li>High EMI payments indicating potential over-extending.</li>
+  <li>Multiple penalty charges and bank charges.</li>
+</ul>
+
+<h2>5. Strengths / Green Flags</h2>
+<ul>
+  <li>Regular EMI payments from multiple loan providers.</li>
+  <li>Substantial account balance indicating financial stability.</li>
+</ul>
+
+<h2>6. Final Recommendation</h2>
+<strong>APPROVE WITH CONDITIONS</strong>
+
+<h3>Supporting Analysis</h3>
+<ul>
+  <li>Verify the account holder's income and expenses to ensure that the account is being used for legitimate purposes.</li>
+  <li>Check for any unusual or suspicious transactions that may indicate potential fraud or money laundering.</li>
+  <li>Review the account holder's credit history and credit score to ensure that they are not over-extending themselves.</li>
+  <li>Check for any outstanding loans or debts that may be affecting the account holder's financial situation.</li>
+</ul>
+```
+
+</body>
+</html>

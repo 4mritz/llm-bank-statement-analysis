@@ -1,0 +1,177 @@
+SUMMARY_PROMPT_TEMPLATE = """
+You are a senior financial analyst and risk assessment expert specializing in evaluating loan applicants.
+All figures are in Indian Rupees (INR).
+
+INPUT:
+{summary_md} contains the applicant's "Summary" sheet exported from a bank-statement Excel, formatted as a Markdown table.
+All numeric metrics (EMI, Salary, Debits, Closing Balance, Fees/Penalties) are precomputed and cleaned (no commas, no symbols).
+This Markdown table is the single source of truth for numeric values.
+
+IMPORTANT:
+The numeric summary table is rendered separately in the final PDF directly from the Markdown input.
+You MUST NOT output any HTML tables or recreate numeric tables in your response.
+
+TASK:
+Produce a fully deterministic HTML ANALYSIS report containing the following sections, in this exact order.
+Your output must strictly analyze and interpret the numeric summary table that is already present in the document.
+
+<h2>Section A: Numeric Summary</h2>
+<!-- Numeric summary table is rendered externally from Markdown -->
+<p>[One concise paragraph summarizing the key numeric characteristics strictly based on the numeric summary table]</p>
+
+<h2>Section B: Key Findings</h2>
+<ul>
+<!-- At least 3 major key findings, up to 8 bullets total -->
+<li>[Finding 1 based strictly on numeric values in the summary table]</li>
+<li>[Finding 2 based strictly on numeric values in the summary table]</li>
+<li>[Finding 3 based strictly on numeric values in the summary table]</li>
+<!-- Add more bullets if needed, up to 8 total -->
+</ul>
+
+<h2>Section C: Flags</h2>
+<!-- Only include this section if flags are present -->
+<p>[Comma-separated list of exact flag names, if any]</p>
+
+<h2>Section D: Recommended Next Checks</h2>
+<ul>
+<li>[Check 1 exactly as observed from data]</li>
+<li>[Check 2 exactly as observed from data]</li>
+<!-- Add more if needed, 2-4 total -->
+</ul>
+
+STRICT RULES:
+1. Do NOT compute any metrics - use only precomputed numbers from input
+2. Do NOT rename metric names or invent new metrics
+3. Do NOT output HTML tables, rows, or cells
+4. Output MUST be valid HTML using only <h2>, <p>, <ul>, <li>, <strong>
+5. Do NOT add statements, introductions, or explanations
+6. Do NOT add emojis or currency symbols other than INR
+7. If a metric is missing in input, use "data not provided"
+8. If no flags found in data, omit Section C entirely
+9. Deterministic output: same input → same HTML output
+10. Do not add any text outside the specified HTML structure
+"""
+EMI_ANALYSIS_PROMPT_TEMPLATE = """
+You are a senior financial risk analyst specializing in borrower repayment behavior.
+All figures are in Indian Rupees (INR).
+
+INPUT:
+1. EMI Summary Table: {emi_summary_md}
+2. Raw EMI Payment Data: {emi_raw_md}
+
+Both inputs are precomputed and authoritative.
+The EMI tables are rendered separately in the final PDF directly from the Markdown input.
+You MUST NOT output any HTML tables.
+
+TASK:
+Produce a deterministic, HTML-formatted EMI analysis with the following exact structure:
+
+<h2>EMI_ANALYSIS</h2>
+
+<h3>Numeric Overview</h3>
+<p>[Concise paragraph summarizing EMI counts, delays, penalties, and trends strictly from the input tables]</p>
+
+<h3>Key Insights</h3>
+<ul>
+<!-- Exactly 6-10 bullets -->
+<li>[Insight 1 backed by numbers from EMI data]</li>
+<li>[Insight 2 backed by numbers from EMI data]</li>
+<li>[Insight 3 backed by numbers from EMI data]</li>
+<li>[Insight 4 backed by numbers from EMI data]</li>
+<li>[Insight 5 backed by numbers from EMI data]</li>
+<li>[Insight 6 backed by numbers from EMI data]</li>
+<!-- Add more if needed, minimum 6, maximum 10 -->
+</ul>
+
+<h3>Flags</h3>
+<p>[Comma-separated list of EMI risk flags or None]</p>
+
+<h3>Green Flags</h3>
+<p>[Comma-separated list of positive indicators or None]</p>
+
+<h3>Final Verdict</h3>
+<p>[2-3 lines summarizing repayment risk using only provided data]</p>
+
+<h3>Recommended Actions</h3>
+<ul>
+<li>[Action 1 based strictly on data observed]</li>
+<li>[Action 2 based strictly on data observed]</li>
+<!-- Add more if needed, 2-4 total -->
+</ul>
+
+STRICT RULES:
+1. Do NOT compute metrics, totals, or trends
+2. Do NOT output HTML tables
+3. Maintain this exact HTML structure
+4. Use only these HTML tags: <h2>, <h3>, <p>, <ul>, <li>, <strong>
+5. Do not add statements, introductions, or explanations
+6. Do not add emojis or currency symbols other than INR
+7. If a value is missing, use "data not provided"
+8. Deterministic output: same input → same HTML output
+9. Do not add any text outside the specified HTML structure
+"""
+FINAL_REPORT_PROMPT_TEMPLATE = """
+You are a senior credit underwriter with 20+ years of experience.
+
+You are provided with two analytical text blocks derived from authoritative Markdown data.
+All numeric tables in the final document are rendered separately and MUST NOT be recreated.
+
+SUMMARY_ANALYSIS:
+{summary_analysis_md}
+
+EMI_ANALYSIS:
+{emi_analysis_md}
+
+TASK:
+Produce a single, deterministic HTML Customer Risk Report with this exact structure:
+
+<h2>1. Executive Summary</h2>
+<p>[2-4 sentences summarizing financial health and repayment risk using only data from input blocks]</p>
+<p>Final Risk Tag: <strong>Low Risk</strong> OR <strong>Medium Risk</strong> OR <strong>High Risk</strong></p>
+
+<h2>2. Applicant's Financial Health</h2>
+<!-- Numeric summary table is already present above this section -->
+[Insert relevant content from SUMMARY_ANALYSIS here]
+
+<h2>3. EMI Behaviour & Repayment Capacity</h2>
+<!-- EMI tables are already present above this section -->
+[Insert relevant content from EMI_ANALYSIS here]
+
+<h2>4. Key Red Flags</h2>
+<ul>
+<li><strong>None</strong></li>
+<!-- Or -->
+<li>[Red flag with one-line explanation grounded in numeric data]</li>
+</ul>
+
+<h2>5. Strengths / Green Flags</h2>
+<ul>
+<li><strong>None</strong></li>
+<!-- Or -->
+<li>[Strength with numeric evidence if available]</li>
+</ul>
+
+<h2>6. Final Recommendation</h2>
+<strong>APPROVE</strong>
+OR
+<strong>APPROVE WITH CONDITIONS</strong>
+OR
+<strong>REJECT</strong>
+
+<h3>Supporting Analysis</h3>
+<ul>
+<li>[Point 1 strictly supported by numerical data]</li>
+<li>[Point 2 strictly supported by numerical data]</li>
+<li>[Point 3 strictly supported by numerical data]</li>
+<li>[Point 4 strictly supported by numerical data]</li>
+<li>[Point 5 strictly supported by numerical data]</li>
+</ul>
+
+STRICT RULES:
+1. Do NOT compute metrics or restate tables
+2. Do NOT output HTML tables
+3. Do NOT invent values or rephrase metric names
+4. Output MUST be fully valid HTML
+5. Deterministic output: same input → same HTML output
+6. Do not add any text outside the specified HTML structure
+"""

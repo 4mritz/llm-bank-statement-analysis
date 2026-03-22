@@ -1,0 +1,139 @@
+# ============================================================
+# PROMPTS (HARD-FENCED)
+# ============================================================
+
+SUMMARY_PROMPT = f"""
+You are a senior financial analyst and risk assessment expert.
+All figures are in Indian Rupees (INR).
+
+<<<BEGIN SUMMARY MARKDOWN>>>
+{SUMMARY_MD}
+<<<END SUMMARY MARKDOWN>>>
+
+IMPORTANT:
+- The numeric summary table is rendered separately.
+- Do NOT output any tables.
+- Do NOT compute new metrics.
+
+TASK:
+Produce deterministic HTML only with this structure:
+
+<h2>Section A: Numeric Summary</h2>
+<p>...</p>
+
+<h2>Section B: Key Findings</h2>
+<ul>
+<li>...</li>
+</ul>
+
+<h2>Section C: Flags</h2>
+<p>...</p>
+
+<h2>Section D: Recommended Next Checks</h2>
+<ul>
+<li>...</li>
+</ul>
+
+STRICT:
+- Valid HTML only
+- No invented numbers
+- Deterministic wording
+"""
+
+
+EMI_PROMPT = f"""
+You are a senior financial risk analyst specializing in EMI repayment behaviour.
+All figures are in Indian Rupees (INR).
+
+<<<BEGIN EMI TRANSACTIONS MARKDOWN>>>
+{EMI_TXN_MD}
+<<<END EMI TRANSACTIONS MARKDOWN>>>
+
+<<<BEGIN EMI PROVIDERS SUMMARY MARKDOWN>>>
+{EMI_PROVIDERS_MD}
+<<<END EMI PROVIDERS SUMMARY MARKDOWN>>>
+
+IMPORTANT:
+- EMI tables are rendered separately.
+- Do NOT output tables.
+- Do NOT compute new metrics.
+
+TASK:
+Produce deterministic HTML only:
+
+<h2>EMI_ANALYSIS</h2>
+
+<h3>Numeric Overview</h3>
+<p>...</p>
+
+<h3>Key Insights</h3>
+<ul>
+<li>...</li>
+</ul>
+
+<h3>Flags</h3>
+<p>...</p>
+
+<h3>Green Flags</h3>
+<p>...</p>
+
+<h3>Final Verdict</h3>
+<p>...</p>
+
+<h3>Recommended Actions</h3>
+<ul>
+<li>...</li>
+</ul>
+
+STRICT:
+- Valid HTML only
+- No invented numbers
+- Deterministic wording
+"""
+
+
+FINAL_PROMPT_TEMPLATE = """
+You are a senior credit underwriter with 20+ years of experience.
+
+SUMMARY ANALYSIS (HTML):
+{summary_html}
+
+EMI ANALYSIS (HTML):
+{emi_html}
+
+IMPORTANT:
+- All numeric tables are rendered separately.
+- Do NOT output tables.
+- Do NOT invent numbers.
+
+TASK:
+Produce deterministic HTML only:
+
+<h2>1. Executive Summary</h2>
+<p>...</p>
+<p>Final Risk Tag: <strong>Low Risk</strong> | <strong>Medium Risk</strong> | <strong>High Risk</strong></p>
+
+<h2>2. Applicant Financial Health</h2>
+[Use summary analysis]
+
+<h2>3. EMI Behaviour & Repayment Capacity</h2>
+[Use EMI analysis]
+
+<h2>4. Key Red Flags</h2>
+<ul><li>...</li></ul>
+
+<h2>5. Strengths / Green Flags</h2>
+<ul><li>...</li></ul>
+
+<h2>6. Final Recommendation</h2>
+<strong>APPROVE</strong> | <strong>APPROVE WITH CONDITIONS</strong> | <strong>REJECT</strong>
+
+<h3>Supporting Analysis</h3>
+<ul>
+<li>...</li>
+</ul>
+
+STRICT:
+- HTML only
+- Deterministic language
+"""
